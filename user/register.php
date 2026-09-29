@@ -38,7 +38,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 $insertResult = $insertStatment->execute();
 
                 if($insertResult){
-                    header("Location: register.php");
+                    header("Location: login.php");
                     exit;
                 }else{
                     echo "data not added";
