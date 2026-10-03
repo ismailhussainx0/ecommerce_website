@@ -20,9 +20,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
 if(isset($_POST["add_product"])){
 
-    // move_uploaded_file($_FILES["product_image"]["tmp_name"], "../uploads/" . $_FILES["product_image"]["name"]);
-    // }    
-
     if(isset($_POST["product_name"], $_POST["product_price"], $_POST["product_description"]) 
     && isset($_FILES["product_image"])){
         
