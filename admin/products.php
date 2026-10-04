@@ -30,7 +30,7 @@ while($row = mysqli_fetch_assoc($result)){
     <p class="card-text"><?php echo $row["product_description"] ?></p>
     <p class="card-text"><?php echo "Rs " . $row["product_price"] ?></p>
     <a href="edit_product.php?id=<?php echo $row["product_id"] ?>" class="btn btn-primary">Edit</a>
-    <a href="#" class="btn btn-primary" >Delete</a>
+    <a href="delete.php?deleteId=<?php echo $row["product_id"] ?>" class="btn btn-primary" >Delete</a>
   </div>
 </div>
 

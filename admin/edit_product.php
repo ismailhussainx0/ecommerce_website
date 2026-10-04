@@ -21,11 +21,19 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         $productPrice = $_POST["product_price"];
         $productDesc = $_POST["product_description"];
 
-        // IMAGE FILE
-        $imgName = $_FILES["product_image"]["name"];
-        $imgTmplocation = $_FILES["product_image"]["tmp_name"];
+        // IMAGE FILE UPLOADED CHECK
+        if($_FILES["product_image"]["error"] === UPLOAD_ERR_OK){
+            $imgName = $_FILES["product_image"]["name"];
+            $imgTmplocation = $_FILES["product_image"]["tmp_name"];
 
-        move_uploaded_file($imgTmplocation, "../uploads/" . $imgName);
+            move_uploaded_file($imgTmplocation, "../uploads/" . $imgName);
+
+            // delete old image
+            unlink("../uploads/" . $row["product_image"]);
+        }else{
+            $imgName = $row["product_image"];
+        }
+
 
         $updateQuery = "UPDATE products SET product_name = ?, product_price = ?, product_description  = ?, product_image = ? 
         WHERE product_id = ?";
