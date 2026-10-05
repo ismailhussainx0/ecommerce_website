@@ -2,7 +2,7 @@
 
 session_start();
 
-if(isset($_SESSION["userId"])){
+if(isset($_SESSION["userId"]) && $_SESSION["role"] === "user"){
     
     echo "Hello " . $_SESSION["userName"];
 }else{

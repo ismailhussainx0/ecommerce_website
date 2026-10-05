@@ -40,7 +40,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
 
                 if($row["role"] === "admin"){
-                    header("Location: ../admin/products.php");
+                    header("Location: ../admin/dashboard.php");
                     exit;
                 }else{
                     header("Location: dashboard.php");
