@@ -36,9 +36,16 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
                 $_SESSION["userId"] = $row["user_id"];
                 $_SESSION["userName"] = $row["name"];
+                $_SESSION["role"] = $row["role"];
 
-                header("Location: dashboard.php");
-                exit;
+
+                if($row["role"] === "admin"){
+                    header("Location: ../admin/products.php");
+                    exit;
+                }else{
+                    header("Location: dashboard.php");
+                }
+
             }else{
                 echo "Wrong Password!";
             }

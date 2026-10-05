@@ -31,10 +31,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 
                 // password hashing 
                 $hash_password = password_hash($password, PASSWORD_DEFAULT);
+                $role = "user";
 
-                $insertQuery = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+                $insertQuery = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
                 $insertStatment = mysqli_prepare($connect, $insertQuery);
-                $insertStatment->bind_param("sss", $name, $email, $hash_password);
+                $insertStatment->bind_param("ssss", $name, $email, $hash_password, $role);
                 $insertResult = $insertStatment->execute();
 
                 if($insertResult){
