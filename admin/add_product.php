@@ -14,6 +14,9 @@
 
 
 <?php
+// SECURITY CHECK 
+include "auth_check.php";
+
 include "../config.php";
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){

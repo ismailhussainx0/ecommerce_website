@@ -1,4 +1,8 @@
 <?php
+// SECURITY CHECK 
+include "auth_check.php";
+
+// DATABASE CONNECTION
 include "../config.php";
 
 $selectQuery = "SELECT * FROM products";

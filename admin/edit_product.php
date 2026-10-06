@@ -1,4 +1,7 @@
 <?php
+// SECURITY CHECK 
+include "auth_check.php";
+
 include "../config.php";
 
 $productId = $_GET["id"];

@@ -5,31 +5,13 @@ include "../config.php";
 
 if(isset($_SESSION["userId"]) && $_SESSION["role"] === "admin"){
 
-    $countQuery = "SELECT COUNT(*) AS total_users FROM users"; 
-    $countResult = mysqli_query($connect, $countQuery); 
-    $countRow = mysqli_fetch_assoc($countResult);
-
-    echo "Hello" ." " . $_SESSION["userName"];
-    echo "<br> <br>";
-    echo "Total Users: " . $countRow["total_users"];
-
-
-
-}else{
-    header("Location: ../user/login.php");
-    exit;
-}
-
-
-if(isset($_SESSION["userId"]) && $_SESSION["role"] === "admin"){
-
 
     // USERS COUNT FROM DATABASE 
     $countQuery = "SELECT COUNT(*) AS total_users FROM users"; 
     $countResult = mysqli_query($connect, $countQuery); 
     $countRow = mysqli_fetch_assoc($countResult);
 
-    echo "Hello" ." " . $_SESSION["userName"];
+    echo "Hello " . $_SESSION["userName"];
     echo "<br> <br>";
     echo "Total Users: " . $countRow["total_users"];
 

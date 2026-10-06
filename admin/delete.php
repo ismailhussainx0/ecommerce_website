@@ -1,4 +1,6 @@
 <?php
+// SECURITY CHECK 
+include "auth_check.php";
 
 include "../config.php";
 

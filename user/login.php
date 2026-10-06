@@ -44,6 +44,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     exit;
                 }else{
                     header("Location: dashboard.php");
+                    exit; 
                 }
 
             }else{
@@ -59,6 +60,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
 
 
+    }else{
+        echo "keys is not set in login page";
     }
 
 
