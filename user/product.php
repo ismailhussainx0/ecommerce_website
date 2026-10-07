@@ -1,9 +1,25 @@
 <?php
 include "../config.php";
 
-
+// PRODUCTS SHOW ON PAGE
 $sql = "SELECT * FROM products";
 $result = mysqli_query($connect, $sql);
+
+
+// SEARCH FUNCTIONALITY
+if(isset($_GET["search"])){
+  $search = $_GET["search"];
+  
+  $searchQuery = "SELECT * FROM products WHERE product_name LIKE ?";
+  $statment = mysqli_prepare($connect, $searchQuery);
+  $searchTerm = "%" . $search . "%";
+  $statment->bind_param("s", $searchTerm);
+  $statment->execute();
+
+  $result = $statment->get_result();
+
+  }
+
 
 ?>
 
