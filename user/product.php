@@ -20,149 +20,106 @@ if(isset($_GET["search"])){
 
   }
 
+// ---- frontend helpers (display only) ----
+$searchValue = isset($_GET["search"]) ? trim($_GET["search"]) : "";
+$totalFound  = $result ? $result->num_rows : 0;
 
+$pageTitle = "Products";
+$navActive = "products";
+include "../partials/user_header.php";
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<!-- hero + search -->
+<section class="hero py-5">
+  <div class="container py-lg-4">
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-8">
+        <span class="eyebrow mb-3"><i class="bi bi-stars"></i> New arrivals</span>
+        <h1 class="hero-title mt-3 mb-3">Find something you'll <span>love.</span></h1>
+        <p class="hero-sub mb-4">Explore our latest products, carefully picked and ready to ship.</p>
+      </div>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-
-    <!-- my css -->
-     <link rel="stylesheet" href="../CSS/style.css">
-
-</head>
-<body>
-  
-<!-- navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-
-    <a href="#" class="navbar-brand">My Store</a>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbar">
-
-    <ul class="navbar-nav ms-auto">
-
-      <li class="nav-item">
-        <a href="" class="nav-link">Home</a>
-      </li>
-
-      <li class="nav-item">
-        <a href="product.php" class="nav-link">Products</a>
-      </li>
-
-      <li class="nav-item">
-        <a href="login.php" class="nav-link">Login</a>
-      </li>
-      
-      <li class="nav-item">
-        <a href="register.php" class="nav-link">Register</a>
-      </li>
-
-    </ul>
-
-
+      <div class="col-md-10 col-lg-7">
+        <!-- SEARCH BAR -->
+        <form action="" method="GET">
+          <div class="input-group input-group-lg search-box">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input type="text" name="search" class="form-control" placeholder="Search products..." value="<?php echo htmlspecialchars($searchValue); ?>">
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+        </form>
+      </div>
     </div>
-
-
   </div>
-
-</nav>
-
-
+</section>
 
 <!-- product container -->
-  <div class="container">
+<div class="container py-5">
 
-    <div class="text-center products-heading">
-    <h1>Our Products</h1>
-    <p>Explore our latest products</p>
+  <div class="row align-items-end g-3 mb-4">
+    <div class="col">
+      <h2 class="h3 mb-1"><?php echo $searchValue !== "" ? "Search results" : "Our Products"; ?></h2>
+      <span class="text-secondary small"><?php echo $totalFound; ?> item<?php echo $totalFound == 1 ? "" : "s"; ?> available</span>
     </div>
 
+    <?php if ($searchValue !== "") { ?>
+    <div class="col-auto">
+      <a href="product.php" class="btn btn-outline-dark btn-sm">
+        “<?php echo htmlspecialchars($searchValue); ?>” <i class="bi bi-x-lg ms-1"></i>
+      </a>
+    </div>
+    <?php } ?>
+  </div>
 
-    <!-- SEARCH BAR -->
+  <?php if ($totalFound === 0) { ?>
 
-    <form action="" method="GET">
+    <div class="empty-state text-center py-5 px-3">
+      <div class="icon mb-3"><i class="bi bi-search-heart"></i></div>
+      <h3 class="h4">No products found</h3>
+      <p class="text-secondary mb-4">Try a different keyword or browse everything we have.</p>
+      <a href="product.php" class="btn btn-primary">View all products</a>
+    </div>
 
-      <div class="row justify-content-center mb-5">
-        <div class="col-12 col-md-8 col-lg-6">
+  <?php } else { ?>
 
-          <input
-          type="text"
-          name="search"
-          class="form-control"
-          placeholder="Search products...">
-
-          <button type="submit" class="btn btn-primary mt-2">
-            Search
-          </button>
-
-        </div>
-      </div>
-    </form>
-
-
-    <div class="row">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
 
 <?php
 while($row = mysqli_fetch_assoc($result)){
 ?>
 
+    <div class="col">
+      <article class="card product-card h-100 shadow-sm">
 
-<div class="col-12 col-md-6 col-lg-4 mb-4">
-    <div class="card product-card h-100">
+        <a href="product_details.php?product_id=<?php echo $row["product_id"]; ?>" class="product-media ratio ratio-1x1">
+          <img
+            class="product-image"
+            loading="lazy"
+            src="../uploads/<?php echo htmlspecialchars($row["product_image"]); ?>"
+            alt="<?php echo htmlspecialchars($row["product_name"]); ?>"
+          >
+          <span class="price-badge">Rs <?php echo htmlspecialchars($row["product_price"]); ?></span>
+        </a>
 
-        <img
-            class="card-img-top product-image"
-            src="../uploads/<?php echo $row["product_image"]; ?>"
-            alt="<?php echo $row["product_name"]; ?>"
-        >
+        <div class="card-body d-flex flex-column p-4">
+          <h3 class="product-title mb-2"><?php echo htmlspecialchars($row["product_name"]); ?></h3>
+          <p class="product-desc mb-4"><?php echo htmlspecialchars($row["product_description"]); ?></p>
 
-        <div class="card-body">
-
-            <h5 class="card-title">
-                <?php echo $row["product_name"]; ?>
-            </h5>
-
-            <p class="card-text">
-                <?php echo $row["product_description"]; ?>
-            </p>
-
-            <p class="fw-bold fs-5">
-                Rs <?php echo $row["product_price"]; ?>
-            </p>
-
-            <a href="product_details.php?product_id=<?php echo $row["product_id"]; ?>" class="btn btn-primary mt-auto">
-                View Product
-            </a>
-
+          <a href="product_details.php?product_id=<?php echo $row["product_id"]; ?>" class="btn btn-outline-primary w-100 mt-auto">
+            View Product <i class="bi bi-arrow-right ms-1"></i>
+          </a>
         </div>
+
+      </article>
     </div>
-</div>  
-  
-  <?php
+
+<?php
 }
 ?>
 
-</div>
+  </div>
+  <?php } ?>
 
 </div>
 
-<!-- bootstrap -->
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
-
-
-
+<?php include "../partials/user_footer.php"; ?>
