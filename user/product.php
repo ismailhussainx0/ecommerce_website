@@ -142,7 +142,7 @@ while($row = mysqli_fetch_assoc($result)){
                 Rs <?php echo $row["product_price"]; ?>
             </p>
 
-            <a href="#" class="btn btn-primary mt-auto">
+            <a href="product_details.php?product_id=<?php echo $row["product_id"]; ?>" class="btn btn-primary mt-auto">
                 View Product
             </a>
 
